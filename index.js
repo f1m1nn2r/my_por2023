@@ -41,12 +41,13 @@ if(document.body.classList.contains('cursor_active') === true){
 }
 // 섹션02 각각의 li 호버 시 스크롤 값 변경되도록
 var section02_li = document.querySelectorAll('.section02-inner ul li');
+var section02_inner = document.querySelector('.section02-inner');
+
 for(var i=0; i<section02_li.length; i++){
     section02_li[i].addEventListener('mouseover', function(e){
-        //var this_li = this;
-
+        
         var percent = e.clientY / window.innerHeight;
-        var section02_inner = document.querySelector('.section02-inner');
+
         section02_inner.animate({
             transform:`translateY(${percent * section02_inner.offsetHeight * -0.5}px)`
         }, {
@@ -54,6 +55,8 @@ for(var i=0; i<section02_li.length; i++){
             duration:4000,
         });
         /*
+        window.scroll({top:`${percent * section02_inner.offsetHeight * -0.5}px`, behavior:'smooth'});
+        
         var this_li_top = this_li.getBoundingClientRect().top + window.pageYOffset;
         window.scroll({top:this_li_top, behavior:'smooth'});
         */
