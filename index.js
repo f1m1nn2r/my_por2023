@@ -52,7 +52,7 @@ for(var i=0; i<section02_li.length; i++){
         }, {
             fill:"forwards",
             duration:4000,
-        })
+        });
         /*
         var this_li_top = this_li.getBoundingClientRect().top + window.pageYOffset;
         window.scroll({top:this_li_top, behavior:'smooth'});
