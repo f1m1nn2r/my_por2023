@@ -12,7 +12,7 @@ var section02 = document.querySelector('.section02');
 var cursor = document.querySelector('.cursor');
 window.addEventListener('scroll', function(){
     var window_sy = window.scrollY;
-    console.log(window_sy);
+    //console.log(window_sy);
     // 각 섹션마다 ani 클래스 추가
     for(var i=0; i<section.length; i++){
         if(window_sy >= section[i].offsetTop){
@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', function(){
 var section02_li = document.querySelectorAll('.section02-inner ul li');
 for(var i=0; i<section02_li.length; i++){
     section02_li[i].addEventListener('mouseover', function(e){
-        //var this_li = this;
-        //var this_li_top = this_li.offsetTop;
+        var this_li = this;
+        /*
         var percent = e.clientY / window.innerHeight;
         var section02_inner = document.querySelector('.section02-inner');
         section02_inner.animate({
@@ -55,5 +55,9 @@ for(var i=0; i<section02_li.length; i++){
             fill:"forwards",
             duration:4000,
         })
+        */
+        var this_li_top = this_li.getBoundingClientRect().top + window.pageYOffset / 1.05;
+        console.log(this_li_top);
+        window.scroll({top:this_li_top, behavior:'smooth'});
     });
 }
