@@ -19,28 +19,47 @@ $point:#DF2E38;
 @mixin dis-grid($num1:null, $num2:null){display:grid; grid-template-columns:repeat($num1, $num2 + #{fr});}
 @mixin position($pt:null, $tp:null, $rg:null, $bt:null, $lf:null, $zd:null){position:$pt; top:$tp; right:$rg; bottom:$bt; left:$lf; z-index:$zd}
 
-body{margin:0; padding:0; @include font(14px, normal, $noto, $black); background:$black;}
+body{margin:0; padding:0; overflow-x:hidden; @include font(14px, normal, $noto, $black); background:$black; cursor:initial;
+    &.cursor_active{cursor:none;}
+}
 *{margin:0; padding:0;}
 a{color:#000; text-decoration:none;}
+ul, ol{list-style:none}
 
-.container_wide > section{@include conSize(100%, null); position:relative;}
+.container_wide > section{@include conSize(100%, null); position:relative; margin:0 0 200px 0;}
+.cursor{width:25px; height:25px; position:fixed; z-index:99; opacity:0; visibility:hidden; background:rgba(255,255,255, 1); border-radius:50%; transition:all .25s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    &.active{opacity:1; visibility:visible;}
+}
 
-
-.fix-deco{@include conSize(100%, 100%); @include dis-flex(null, space-between, null, null); @include position(fixed, 0, null, null, 0, 99);
-    .line{position:absolute;}
-    .left{
-        .line{background:rgba(255,255,255, .5);
-            &:first-child{@include conSize(200px, 1px); top:50px;}
-            &:last-child{@include conSize(1px, 400px); top:27px; left:20px;}
+/*** 시작 ***/
+.fix-deco{@include conSize(100%, 100%); @include dis-flex(null, space-between, null, null); 
+    .left{@include position(fixed, 20px, null, null, 20px, 3);
+        .line{position:absolute; background:rgba(255,255,255, .5);
+            &:first-child{@include conSize(200px, 1px); top:27px;}
+            &:last-child{@include conSize(1px, 400px); top:0; left:20px;}
         }
     }
-    .right{
-        .line{@include dis-flex(null, null, null, 50px); right:20px; bottom:0;
+    .right{display:flex; @include position(fixed, null, 20px, 0, null, 3);
+        .line{@include dis-flex(null, null, null, null);}
+        .line-1{@include dis-flex(null, null, column, 50px);
             span{display:block;
                 &:first-child{@include conSize(1px, 400px); background:rgba(255, 255, 255, 1)}
                 &:nth-child(2){@include conSize(1px, 100px); background:rgba(255, 255, 255, 0.7)}
                 &:nth-child(3){@include conSize(1px, 50px); background:rgba(255, 255, 255, 0.5)}
                 &:last-child{@include conSize(1px, 10px); background:rgba(255, 255, 255, 0.2)}
+            }
+        }
+        .line-2{@include dis-flex(null, space-between, column, 20px); margin:150px 0 0 50px;
+            span{
+                &:first-child{@include conSize(1px, 500px); background:#fff;}
+                &:nth-child(2){@include conSize(1px, 250px); background:rgba(255,255,255, .5);}
+                &:last-child{@include conSize(1px, 50px); background:rgba(255,255,255, .2);}
+            }
+        }
+        .line-3{@include dis-flex(center, flex-end, column, 50px); margin:0 0 50px 30px;
+            span{
+                &:first-child{@include conSize(5px, 30px); background:#fff;}
+                &:last-child{@include conSize(2px, 15px); background:rgba(255,255,255, .5)}
             }
         }
     }
@@ -153,4 +172,102 @@ a{color:#000; text-decoration:none;}
     }
 }
 /*** 섹션02 ***/
-.section02{height:100vh;}
+.section02{height:auto; z-index:2;
+    .line-wrap{@include conSize(100%, 100%); @include dis-flex(null, null, null, null);
+        .wt-line{@include conSize(100%, 100%); @include dis-flex(null, space-evenly, null, null); @include position(absolute, 0, null, null, 0, -1);
+            .line{@include conSize(1px, 100%); background:rgba(255,255,255, .2);}
+        }
+        .left{flex:1; height:100vh; @include dis-flex(null, space-between, column, null);
+            .top{
+                .fir{@include conSize(500px, 250px); @include dis-flex(null, flex-end, null, 20px); margin:0 auto; margin-right:0; margin-bottom:50px;
+                    span{@include conSize(1px, 100%); transform:rotate(15deg); background:$point}
+                }
+                .sec{@include dis-flex(center, null, column, null); position:relative;
+                    & > div{width:100%;}
+                    & > div:first-child{@include dis-flex(center, null, null, null);
+                        span{
+                            &:first-child{@include conSize(10px, 10px); background:$white;}
+                            &:nth-child(2){@include conSize(calc(100% - 250px), 1px); height:1px; margin:0 80px 0 50px; background:rgba(255,255,255, .7);}
+                            &:nth-child(3){@include conSize(20px, 1px); background:rgba(255,255,255, .5)}
+                            &:last-child{@include conSize(4px, 4px); margin:0 0 0 83px; background:rgba(255,255,255, .3); border-radius:50%;}
+                        } 
+                    }
+                    & > div:last-child{line-height:1; display:flex; @include position(absolute, 64px, -191px, null, null, null); text-transform:uppercase;
+                        p{@include font(null, bold, $mont, null);
+                            &:first-child{margin:-14px 0 0 118px; @include font(100px, null, null, $white);
+                                span{margin:0 0 0 21px; @include font(16px, 400, null, null);}
+                            }
+                            &:last-child{display:flex; position:absolute;
+                                span{position:relative; @include font(180px, null, null, rgba(255,255,255, .2)); letter-spacing:-9px;}
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            .mid{padding-bottom:100px;
+                .fir{width:100%; @include dis-flex(flex-end, null, null, 30px); margin-bottom:120px;
+                    span{
+                        &:first-child{@include conSize(calc(100% - 200px), 100px); clip-path:polygon(0 0, 84% 0, 100% 100%, 47% 100%, 0 100%); background:$white;}
+                        &:last-child{@include conSize(200px, 30px); clip-path:polygon(20% 0, 100% 0, 100% 100%, 46% 100%, 0 100%); background:$white}
+                    }
+                }
+                .sec{@include dis-flex(null, space-between, null, null);
+                    span{@include conSize(20px, 20px); position:relative;
+                        &::before, &::after{content:""; @include conSize(100%, 100%); position:absolute; border:1px solid $white;}
+                        &:first-child{
+                            &::before{border-left:0; border-bottom:0;}
+                            &::after{left:26px; border-right:0; border-bottom:0;}
+                        }
+                        &:nth-child(2){
+                            &::before{border-left:0; border-top:0;}
+                            &::after{left:26px; border-right:0; border-top:0;}
+                        }
+                        &:nth-child(3){@include dis-flex(center, center, null, null);
+                            &::before, &::after{background:#fff; border:0; }
+                            &::before{width:100%; height:1px;}
+                            &::after{width:1px; height:100%;}
+                        }
+                        &:last-child{
+                            &::before{display:none}
+                            &::after{border-left:0; border-top:0;}
+                        }
+                    }
+                }
+            }
+        }
+        .right{flex:1;
+            .top{@include dis-flex(flex-end, flex-end, null, null);
+                span{
+                    &:first-child{@include conSize(50px, 500px); clip-path:polygon(0% 10%, 100% 0, 100% 90%, 0% 100%); background:$white;}
+                    &:last-child{@include conSize(500px, 50px); margin:0 0 0 -35px; clip-path:polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%); background:$white;}
+                }
+            }
+            .mid{@include dis-flex(center, space-between, null, null); margin:150px 0 50px 0;
+                span{
+                    &:first-child{@include conSize(20px, 5px); background:rgba(255,255,255, .7);}
+                    &:nth-child(2){@include conSize(300px, 3px); background:rgba(255,255,255, .4)}
+                    &:nth-child(3){@include conSize(250px, 3px); background:rgba(255,255,255, .8)}
+                    &:last-child{@include conSize(150px, 1px); background:$white}
+                }
+            }
+            .bot{
+                div:first-child{@include dis-flex(null, space-around, null, null);
+                    span{
+                        &:first-child{@include conSize(calc(100% - 450px), 1px); height:1px; background:rgba(255,255,255, .3);}
+                        &:last-child{@include conSize(50px, 1px); background:$white;}
+                    }
+                }
+            }
+        }
+    }
+    &-inner{height:100%; padding:5em;
+        ul{
+            li{@include conSize(65%, null); @include dis-flex(flex-end, null, null, null); padding:40px 0; margin:0 auto; margin-right:0; @include font(3rem, null, $noto, rgba(255,255,255, .6)); border-bottom:1px solid rgba(255,255,255, .6); transition:all .45s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+                p{@include conSize(calc(100% - 350px), null); cursor:default;}
+                a{@include conSize(350px, null); display:block; padding:0 0 5px 0; @include font(22px, 300, $roboto, inherit); text-align:right;}
+                &:hover{color:$white;}
+            }
+        }
+    }
+}
